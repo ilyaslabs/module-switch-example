@@ -1,0 +1,27 @@
+# Default: everything runs in one process (a modular monolith).
+# Try changing a mode to off or http and restart; see README.md for ideas.
+spring:
+  application:
+    name: shop
+
+server:
+  port: 8080
+
+module-switch:
+  modules:
+    users:
+      mode: local
+    catalog:
+      mode: local
+    inventory:
+      mode: local
+    payments:
+      mode: local
+    orders:
+      mode: local
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics

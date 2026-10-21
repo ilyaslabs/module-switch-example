@@ -1,0 +1,21 @@
+# The warehouse service: runs catalog and inventory, and serves them to other deployments
+# on the internal port 9081. Start it with --spring.profiles.active=warehouse.
+spring:
+  application:
+    name: warehouse
+
+server:
+  port: 8081
+
+module-switch:
+  modules:
+    users:
+      mode: off
+    payments:
+      mode: off
+    orders:
+      mode: off
+  expose:
+    port: 9081
+    modules: [catalog, inventory]
+    token: ${INTERNAL_TOKEN:local-dev-secret}
