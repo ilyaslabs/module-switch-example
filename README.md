@@ -34,13 +34,16 @@ Sample data:
 ## Requirements
 
 - JDK 25
-- Nothing else: the Gradle wrapper downloads everything, including Module-Switch from Maven Central.
+- Nothing else: the Maven wrapper (`./mvnw`) downloads Maven and every dependency, including Module-Switch from Maven Central.
 
 ## 1. Run it as a monolith
 
 ```bash
-./gradlew :app:bootRun
+./mvnw install -DskipTests
+./mvnw -pl app spring-boot:run
 ```
+
+The first command builds all modules once; run it again after you change a module.
 
 The log shows every module's mode:
 
@@ -62,13 +65,13 @@ curl -X POST localhost:8080/api/orders -H 'Content-Type: application/json' \
 Same code, two processes. The **warehouse** runs `catalog` and `inventory` and serves them on internal port 9081. The **shop** runs `users`, `payments` and `orders`, and calls the warehouse over HTTP.
 
 ```bash
-./gradlew :app:bootJar
+./mvnw package -DskipTests
 
 # terminal 1
-java -jar app/build/libs/shop.jar --spring.profiles.active=warehouse
+java -jar app/target/shop.jar --spring.profiles.active=warehouse
 
 # terminal 2
-java -jar app/build/libs/shop.jar --spring.profiles.active=shop
+java -jar app/target/shop.jar --spring.profiles.active=shop
 ```
 
 ```
@@ -81,7 +84,7 @@ The same `curl` to port 8080 still places an order, but now `getProduct` and `re
 
 ## 3. Things to try
 
-Each one is a config change only.
+Each one is a config change only. Edit `app/src/main/resources/application.yaml`, or pass the setting on the command line: `java -jar app/target/shop.jar --module-switch.modules.orders.mode=off`, or `./mvnw -pl app spring-boot:run -Dspring-boot.run.arguments=--module-switch.modules.orders.mode=off`.
 
 | Try | How | What you'll see |
 |---|---|---|
@@ -97,7 +100,7 @@ Each one is a config change only.
 ## 4. Tests
 
 ```bash
-./gradlew build
+./mvnw verify
 ```
 
 | Test | Shows |
@@ -109,7 +112,7 @@ Each one is a config change only.
 
 ## Using a different Module-Switch version
 
-The version lives in `gradle.properties` (`moduleSwitchVersion`). To try a library change before it's published, run `./gradlew publishToMavenLocal -Pversion=<version>` in the library and set the same version here. A locally published build always wins.
+The version is the `module-switch.version` property in the root `pom.xml`. To try a library change before it's published, run `./gradlew publishToMavenLocal -Pversion=<version>` in the library and set the same version here. Maven uses your local `~/.m2` copy first.
 
 ## Learn more
 
