@@ -21,7 +21,7 @@
     <properties>
         <java.version>25</java.version>
         <!-- Snapshots are published from the library's branches; switch to a release such as 0.1.0 once one is out. -->
-        <module-switch.version>claude-project-thread-spuea8-SNAPSHOT</module-switch.version>
+        <module-switch.version>0.0.1</module-switch.version>
     </properties>
 
     <!-- Five modules, each split into an -api part (interfaces + records) and an -impl part. -->
