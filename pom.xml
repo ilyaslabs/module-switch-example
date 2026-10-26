@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.1</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.example.shop</groupId>
+    <artifactId>module-switch-example</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>module-switch-example</name>
+    <description>A five-module shop that shows Module-Switch: run modules local, over http, or off by configuration.</description>
+
+    <properties>
+        <java.version>25</java.version>
+        <!-- Snapshots are published from the library's branches; switch to a release such as 0.1.0 once one is out. -->
+        <module-switch.version>0.0.1</module-switch.version>
+    </properties>
+
+    <!-- Five modules, each split into an -api part (interfaces + records) and an -impl part. -->
+    <modules>
+        <module>users</module>
+        <module>catalog</module>
+        <module>inventory</module>
+        <module>payments</module>
+        <module>orders</module>
+        <module>app</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.ilyaslabs</groupId>
+                <artifactId>module-switch-bom</artifactId>
+                <version>${module-switch.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>users-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>users-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>catalog-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>catalog-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>inventory-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>inventory-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>payments-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>payments-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>orders-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example.shop</groupId>
+                <artifactId>orders-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Module-Switch snapshots. Releases come from Maven Central, and a locally installed build always wins. -->
+    <repositories>
+        <repository>
+            <id>central-portal-snapshots</id>
+            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>

@@ -1,0 +1,50 @@
+### Run these from IntelliJ or the VS Code REST Client. Ports: 8080 = monolith or shop, 8081 = warehouse.
+
+### Users
+GET http://localhost:8080/api/users
+
+### Products (on the warehouse when you run the split)
+GET http://localhost:8080/api/products?category=appliances
+
+### Stock
+GET http://localhost:8080/api/stock
+
+### Place an order: Carol buys 2 coffee grinders
+POST http://localhost:8080/api/orders
+Content-Type: application/json
+
+{"userId": 3, "productId": 2, "quantity": 2}
+
+### Out of stock: 409 OUT_OF_STOCK from inventory
+POST http://localhost:8080/api/orders
+Content-Type: application/json
+
+{"userId": 1, "productId": 4, "quantity": 1}
+
+### Not enough money: 409 INSUFFICIENT_FUNDS from payments (Bob has 50.00)
+POST http://localhost:8080/api/orders
+Content-Type: application/json
+
+{"userId": 2, "productId": 1, "quantity": 1}
+
+### Unknown product: 404 PRODUCT_NOT_FOUND from catalog
+POST http://localhost:8080/api/orders
+Content-Type: application/json
+
+{"userId": 1, "productId": 42, "quantity": 1}
+
+### Orders and payments
+GET http://localhost:8080/api/orders
+
+###
+GET http://localhost:8080/api/payments
+
+### Every module call, tagged by module, method, mode and outcome
+GET http://localhost:8080/actuator/metrics/module.switch.call
+
+### Call the warehouse's internal port directly, the way the shop does (split mode only)
+POST http://localhost:9081/catalog/CatalogApi/getProduct
+Content-Type: application/json
+X-Module-Switch-Token: local-dev-secret
+
+{"id": 1}

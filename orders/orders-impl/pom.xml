@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example.shop</groupId>
+        <artifactId>orders</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>orders-impl</artifactId>
+    <name>orders-impl</name>
+    <description>The orders module's implementation and REST endpoints. Loaded only when orders is local.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.example.shop</groupId>
+            <artifactId>orders-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <!-- orders calls the other four modules, so it depends on their APIs (never on their -impl parts). -->
+        <dependency>
+            <groupId>com.example.shop</groupId>
+            <artifactId>users-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.example.shop</groupId>
+            <artifactId>catalog-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.example.shop</groupId>
+            <artifactId>inventory-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.example.shop</groupId>
+            <artifactId>payments-api</artifactId>
+        </dependency>
+    </dependencies>
+</project>

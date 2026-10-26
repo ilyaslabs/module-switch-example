@@ -1,0 +1,12 @@
+# The shop service: runs users, payments and orders, and calls catalog and inventory over
+# HTTP on the warehouse service. Start it with --spring.profiles.active=shop.
+module-switch:
+  modules:
+    catalog:
+      mode: http
+      url: http://localhost:9081
+      token: ${INTERNAL_TOKEN:local-dev-secret}
+    inventory:
+      mode: http
+      url: http://localhost:9081
+      token: ${INTERNAL_TOKEN:local-dev-secret}
